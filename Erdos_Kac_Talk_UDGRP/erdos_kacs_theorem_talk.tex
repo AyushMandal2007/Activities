@@ -1,0 +1,534 @@
+\documentclass{beamer}
+%theme
+\setbeamertemplate{section in toc}[ball]
+\setbeamertemplate{subsection in toc}[ball]
+\usetheme[block=fill, progressbar=foot]{moloch}
+\setbeamertemplate{theorems}[numbered]
+\setbeamertemplate{caption}[numbered]
+%packages
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx,physics,amssymb,amsmath,amsthm,mathdots}
+\usepackage{tikz}
+\usepackage{siunitx}
+\usepackage{siunitx}
+\usetikzlibrary{matrix}
+%Numbering
+\numberwithin{theorem}{section} 
+\theoremstyle{definition}
+\newtheorem{remark}{Remark}
+%starts here
+\title{Erdős–Kac theorem}
+\subtitle{- Proof by A.Grandville and K.Soudararajan -}
+\author{Ayush Mandal}
+\institute{B.Math year I, Indian Statistical Institute (Bangalore)\\ \url{bmat2513@isibang.ac.in}}
+\date{\today}
+
+
+\begin{document}
+
+\maketitle
+\begin{frame}{Contents}
+\tableofcontents
+
+    
+\end{frame}
+\section{Introduction}
+\begin{frame}{Theorem statement}
+The main theorem which we are going to proof is the following:
+\begin{theorem}[Erdos-Kac theorem 1940]
+    For $N\ge 1$ consider the set $\si{\ohm}_N=\{1,2,3,\cdots,N\}$. Let $w(n)$ be the number of distinct prime factors of $n$ for any positive integer $n\ge 1$. Consider the random variable $X_N=\frac{w(n)-loglogN}{\sqrt{loglogN}}$. Then for any real numbers $a\le b$ we have,
+    $$\lim_{N\rightarrow \infty}\mathbb{P}(a\le X_N\le b)=\frac{1}{\sqrt{2\pi}}\int_{a}^{b}e^{-\frac{x^2}{2}}dx$$
+\end{theorem}
+Vaguely speaking the random variable $X_N$ converges in law to the standard normal distribution as $N\rightarrow\infty$.
+In this presentation I will present two proofs of this theorem for which we need to come up with few prerequisites which will be heavily used in the proof.
+
+
+\end{frame}
+\section{Prerequistes}
+\begin{frame}{Prerequsites}
+    \begin{theorem}
+        For $N \ge1$, let $\si{\ohm}_N = \{1,\cdots, N\}$ with the uniform probability distribution. Fix an integer $q\ge 1$, and denote by 
+        $\pi_q: \mathbb{Z}\rightarrow\mathbb{Z}/q\mathbb{Z}$ the reduction modulo $q$ map.Let $X_N$ be the random variables given by $X_N (n) = \pi_q (n)$ for $n \in \si{\ohm}_N$ . For any function,
+        $$f:\mathbb{Z}/q\mathbb{Z}\rightarrow\mathbb{C}$$ we have $$|E(f(X_N))-E(f)|\le \frac{2}{N}||f||_1$$ where $||f||_1=\sum_{a\in \mathbb{Z}/q\mathbb{Z}}|f(a)|$.
+    \end{theorem}
+    
+\end{frame}
+\begin{frame}{}
+\begin{proof}
+     Observe $X_N$ takes values only the residues of $q$. By  the defination of expectation,
+       $$E(f(X_N))=\frac{1}{N}\sum_{1\le n\le N}f(\pi_q(n))$$
+       For any $a\in \mathbb{Z}/q\mathbb{Z}$, say $f(\pi_q(a))$ repeats by $m_a$
+       times  whenever $n\equiv a \pmod{q}$. So 
+       \begin{align*}
+           \frac{N-a}{q}-\frac{1-a}{q}-1\le m_a\le  \frac{N-a}{q}-\frac{1-a}{q}+
+           
+       \end{align*}
+       $$\implies \frac{N-1}{q}-1\le m_a\le \frac{N-1}{q}+1$$
+       or,
+       $$\left|m_a-\frac{N}{q}\right|\le 1+\frac{1}{q}$$
+       \end{proof}
+       \end{frame}
+       \begin{frame}[shrink=4]
+       \begin{proof}
+            $$E(f(X_N))=\frac{1}{N}\sum_{1\le n\le N}f(\pi_q(n))=\frac{1}{N}\sum_{a\in Z/qZ}f(a).m_a$$.
+           and $$E(f)=\frac{1}{q}\sum_{a\in Z/qZ}f(a)$$.
+           %$$\implies \frac{m_a}{N}-\frac{1}{q}\le \frac{1}{N}$$
+           \begin{align*}
+            \left|E(f(X_N))-E(f)\right|&=\left|\sum_{a\in Z/qZ}f(a)\left(\frac{m_a}{N}-\frac{1}{q}\right)\right| \\ &\le \frac{1}{N}\sum_{a\in Z/qZ}f(a)\left|m_a-\frac{N}{q}\right|\\
+            &\le \sum_{a\in Z/qZ}f(a)\left(\frac{1+\frac{1}{q}}{N}\right)\le \frac{2}{N}||f||_1
+           \end{align*}
+       \end{proof}
+           
+       \end{frame}
+       \begin{frame}{}
+       From this theorem we can see that,
+       $$\lim_{N\rightarrow\infty}|E(f(X_N))-E(f)|=0$$.
+       \begin{itemize}
+           \item \textbf{Question:} Fix a positive integer $q\ge 1$. Choose a number $n$ from the set $\si{\ohm}_N=\{1,2,\cdots,N\}$. What is the probabilty that $n\equiv a \pmod{q}$?\\
+           \end{itemize}
+           Intuitively it seems to be $\frac{1}{q}$ which is true but this can be easily proved by the above theorem. Consider a characteristic function 
+           $f:\mathbb{Z}/q\mathbb{Z}\rightarrow {0,1}$, which gives $1$ is $n\equiv a \pmod{q}$ otherwise $0$.
+           $$E(f(X_N))=\mathbb{P}(X_N\equiv a \pmod{q})$$ and $E(f)=\frac{1}{q}$
+           Thus, by the above theorem,
+           $$\lim_{N\rightarrow\infty}|E(f(X_N))-E(f)|=0$$
+           $$\implies \lim_{N\rightarrow\infty}\mathbb{P}(X_N\equiv a\pmod{q})=\frac{1}{q}$$
+       \end{frame}
+       \begin{frame}{}
+       \begin{block}{A fun exerice}
+       Consider the set $\si{\ohm}_N=\{1,2,\cdots,N\}$. From this set chose a number say $n$. Show that $$\lim_{N\rightarrow\infty}\mathbb{P}_N(n \text{ is square free})=\frac{6}{\pi^2}$$
+       Hints:
+       \begin{itemize}
+           \item Use inclusion and exclusion
+           \item Use the fact $\sum_{n=1}^{\infty}\frac{\mu(n)}{n^2}=\frac{6}{\pi^2}$
+       \end{itemize}
+           
+       \end{block}
+           
+       \end{frame}
+       \subsection{Moment generating function}
+       \begin{frame}{Moment generating function}
+           \begin{block}{Definition}
+               The Moment generating function of a random variable $X$ is denoted by $M_X(t)$ which is defined by 
+               $$M_X(t)=E(e^{tX})$$
+           \end{block}
+           Here we will mainly concentrate on the moment generating function of normal distribution.\\
+           Let $X$ be a random variable normally distributed with mean $\mu$ and variance $\sigma^2$.
+           $$M_X(t)=\frac{1}{\sigma\sqrt{2\pi}}\int_{-\infty}^{\infty}e^{tx}.e^{-\frac{1}{2}(\frac{x-\mu}{\sigma})^2}dx$$
+           
+       \end{frame}
+       \begin{frame}{}
+       By using some series of calculations we can get that $$M_X(t)=e^{\mu t+\frac{(\sigma t)^2}{2}}$$.
+       Now lets see that why it is called the moment generating function.
+       $$M_X(t)=E(e^{tX})=E\left(\sum_{n=0}^{\infty}\frac{X^n}{n!}t^n\right)$$
+       Assume that $M_X(t)$ is finite for all $-\infty<t<\infty$. Thus, the last expression of $M_X(t)$ is permissible to interchange the order of expectation and summation. In other words,
+       $$M_X(t)=\sum_{n=0}^{\infty}\frac{E(X^n)}{n!}t^n$$
+           
+       \end{frame}
+       \begin{frame}{}
+       We are interested in the moments of Normal distributed random variable say $X$ of mean $0$ and variance $\sigma^2$. Thus lets find out the $M_X(t)$ of $X$.\\
+       We have,
+       $$M_X(t)=e^{\frac{(\sigma t)^2}{2}}$$
+       $$=\sum_{n=0}^{\infty}\frac{(\sigma t)^{2n}}{2^n}\frac{1}{n!}$$
+       Comparing the coefficients of $t^k$ we get that the odd moments of $X$ is 0, and 
+       $$\frac{E(X^{2n})}{(2n)!}=\frac{\sigma^{2n}}{2^n.n!}$$
+       $$\implies E(X^{2n})=\frac{(2n)!\sigma^{2n}}{2^n.n!}$$
+       for all $n\ge 0$.
+           
+       \end{frame}
+       \subsection{Carleman's Condition}
+       \begin{frame}{Carleman's Condition}
+        \begin{block}{Condition}
+        Let $\mu$ be a measure on $\mathbb{R}$ such that all the moments,
+        $$m_n=\int_{-\infty}^{\infty}x^n.d\mu(x)$$ are finite for all $n\ge 0$.
+        If $$\sum_{n=1}^{\infty}m_{2n}^{-\frac{1}{2n}}=+\infty$$ then $\mu$ is the only measure on $\mathbb{R}$ with $m_n$ as its sequence of moments.
+            
+        \end{block}
+           
+       \end{frame}
+       \begin{frame}{}
+       Carleman's condition gives a sufficient condition for the determinacy of the moment problem. That is, if a measure 
+        $\mu$ satisfies Carleman's condition, there is no other measure $\nu$ having the same moments that of $\mu$.\\
+        \textbf{Observe that gaussian distribution satisfies the Carleman's Condition. }
+           
+       \end{frame}
+       \begin{frame}{}
+       \begin{block}{Corrollary 1.1}
+           Let $X_N$ be a sequence of random variables satisfying the following:
+           \begin{itemize}
+               \item $$\lim_{N\rightarrow\infty}E(X_N^{2k+1})=0$$ for all $k\ge 0$
+               \item $$\lim_{N\rightarrow\infty}E(X_N^{2k})=\frac{(2k)!\sigma^{2k}}{2^kk!}$$ for all $k\ge 0$
+           \end{itemize}
+           Say, $\lim_{N\rightarrow\infty}X_N=Y$. Then $Y\sim N(0,\sigma^2)$.
+       \end{block}
+           
+       \end{frame}
+       \subsection{Merten's formula}
+       \begin{frame}{Mertens Theorem}
+       \begin{block}{Theorem}
+           For any real number $x\ge 1$,
+           $$\sum_{p\le x}\frac{1}{p}=\ln(\ln x)+M+\mathcal{O}\left(\frac{1}{\ln x}\right)$$
+           Or, $$\sum_{p\le x}\frac{1}{p}\sim \ln(\ln x)$$ as $x\rightarrow\infty$.
+       \end{block}
+       One can get the proof of this theorem from internet source or from the Apostol book of The Introduction on Analytic Number Theory.
+           
+       \end{frame}
+       \subsection{Lyapunov CLT}
+       \begin{frame}{Lyapunov CLT}
+       \begin{theorem}
+           Suppose $\{X_i\}_{i\ge 1}$ be sequence of independent random variables with finite expectation $\mu_i$ and variance $\sigma^2_i$. Define $s_n^2=\sum_{i=1}^n\sigma^2_i$.If for some $\delta>0$, the Lyapunov condition:
+           $$\lim_{n\rightarrow\infty}\frac{1}{s_n^{2+\delta}}\sum_{i=1}^nE[|X_i-\mu_i|^{2+\delta}]=0$$.
+           satisfies. Then,
+           $$\lim_{n\rightarrow\infty}\frac{1}{s_n}\sum_{i=1}^n(X_i-\mu_i)\sim N(0,1)$$
+           \end{theorem}
+           
+       \end{frame}
+       \subsection{Gcd restricted sum}
+       \begin{frame}[shrink=5]{Gcd restricted sum}
+           \begin{block}{theorem}
+               Let $r=\prod_{i}^sp_i^{\alpha_i}$ and define $R=\prod_{i}^sp_i$. And say $\gcd(n,R)=d$. Then,
+               $$\sum\limits_{\substack{n\le x\\(n,R)=d}}1=\left(\frac{x}{R}\right)\phi\left(\frac{R}{d}\right)+\mathcal{O}\left(\tau\left(\frac{R}{d}\right)\right)$$
+           \end{block}
+           \textbf{Proof:}\\
+               As we need to count $n$ when $(n,R)=d$, we can say $n=md$. Thus,
+               \begin{align*}
+                   \sum\limits_{\substack{n\le x\\(n,R)=d}}1&=\sum\limits_{\substack{md\le x\\ (md,R)=d}}1\\
+                   &=\sum\limits_{\substack{m\le \frac{x}{d}\\(m,\frac{R}{d})=1}}1
+               \end{align*}
+       \end{frame}
+       \begin{frame}[shrink=5]
+       We can rewrite our sum in the following way,
+       \begin{align*}
+           \sum\limits_{\substack{n\le x\\(n,R)=d}}1=\sum\limits_{\substack{m\le \frac{x}{d}\\(m,\frac{R}{d})=1}}1&=\sum_{m\le \frac{x}{d}}\sum_{k|(m,\frac{R}{d})}\mu(k)\\
+           &=\sum_{k|(m,\frac{R}{d})}\mu(k)\sum\limits_{\substack{m\le \frac{x}{d}\\k|m }}1. \\
+           &=\sum_{k|(m,\frac{R}{d})}\mu(k)\left(\frac{x}{dk}+\mathcal{O}(1)\right)\\&=\frac{x}{d}\sum_{k|(m,\frac{R}{d})}\frac{\mu(k)}{k}+\sum_{k|(m,\frac{R}{d})}\mathcal{O}(1)\\ &=\frac{x}{R}\phi\left(\frac{R}{d}\right)+\mathcal{O}\left(\tau\left(\frac{R}{d}\right)\right).
+       \end{align*}
+           
+       \end{frame}
+       
+    \section{Heuristic proof}
+    \begin{frame}{An Heuristic proof of Erdos-Kacs Theorem}
+    Consider the bernolli random variable $X_p$ which gives $1$ if $p|n$ else  gives $0$ for each prime $p$. Observe that we can write $$w(n)=\sum_{p\le n}X_p(n)$$
+    Since $X_p$ is a bernolli RV, $E(X_p)=P(X_p=1)=\frac{1}{p}$ and $\sigma_p^2=\frac{1}{p}\left(1-\frac{1}{p}\right)$.
+    Thus,
+    $$\sum_{p}E(X_p)=\sum_{p}\frac{1}{p}$$        
+    \end{frame}
+    \begin{frame}{}
+    and $$\sum_{p}\sigma_p^2=\sum_{p}\frac{1}{p}\left(1-\frac{1}{p}\right)$$
+    Here $X_p$ are independent random variables satisfyig the Lyapunov's condition. Thus, using the theorem we can say,
+    $$\lim_{n\rightarrow\infty}\frac{(\sum_{p\le n}X_p)-(\sum_{p\le n}\mu_i)}{\sqrt{\sum_{p\le n}\sigma_p^2}}\sim N(0,1)$$
+    As $n\rightarrow\infty$, $\sum_{p\le n}X_p=w(n)$.
+    By using the Mertens theorem,
+    We can say that,
+        
+    \end{frame}
+\begin{frame}{}
+    $$\lim_{n\rightarrow\infty}\frac{w(n)-\ln(\ln n)}{\sqrt{\ln(\ln n)}}\sim N(0,1)$$
+    This is how we come up with a non rigorous proof of Erdos kacs theorem.
+\end{frame}
+\section{The Proof by Granville and Soundararajan}
+\subsection{Part I}
+\begin{frame}{PART I}
+Let $p$ be a prime and $n\in \mathbb{N}$. Define $f_p(n)$ by,
+$f_p(n)=$\begin{cases}
+    1-\frac{1}{p}& \text{if } p \mid n \\ 
+-\frac{1}{p} & \text{if } p \nmid n.
+\end{cases}
+Denote,$$C_k=\frac{\Gamma(k+1)}{2^{\frac{k}{2}}\Gamma(\frac{k}{2}+1)}$$
+for every $k\in \mathbb{N}$.
+By using the property $$\Gamma(k+1)=k\Gamma(k)$$. One can show that $$C_k=\frac{k!}{2^{k/2}\left(\frac{k}{2}\right)!}$$
+\end{frame}
+\begin{frame}[shrink=8]
+\begin{block}{Proposition}
+    Let $z\ge 10^6$ be a real number. For even natural numbers $k\le (\log\log z)^{\frac{1}{3}}$,
+    $$\sum_{n\le x}\left(\sum_{p\le z}f_p(n)\right)^k=C_kx(\log \log z)^{\frac{k}{2}}\left(1+\mathcal{O}\left(\frac{k^3}{\log \log z}\right)\right)+\mathcal{O}(3^k.\pi(z)^k).$$
+    And for odd natural numbers $k$,
+    $$\sum_{n\le x}\left(\sum_{p\le z}f_p(n)\right)^k \ll C_kx(\log \log z)^{\frac{k}{2}}\frac{k^{\frac{3}{2}}}{\sqrt{\log \log z}}+\mathcal{O}(3^k\pi(z)^k).$$
+\end{block}
+    
+\end{frame}
+\begin{frame}{Proof of Proposition}
+    Observe that $f_p(n)$ is multiplicative. Thus for $n=\prod_{i}p_i^{\alpha_i}$, we have
+    $$f_r(n)=\prod_{i}f_{p_i}(n)^{\alpha_i}$$
+    $$\sum_{n\le x}\left(\sum_{p\le z}f_p(n)\right)^k=\sum_{p_1,p_2,\cdots, p_k\le z}\sum_{n\le x}f_{p_1.\cdots p_k}(n)$$
+    Now lets change our focus on finding some cool stuffs on $\sum_{n\le x}f_r(n)$.
+    For $r=\prod_{i}^sq^{a_i}$, let $R=q_1\cdot q_2\cdots q_s$. Observe that,
+    $$f_r(n)=f_r(\gcd(n,R))$$
+    
+\end{frame}
+\begin{frame}[shrink=8]
+Thus we can write,
+\begin{align*}
+\sum_{n \le x} f_r(n) &=\sum_{d|R}f_r(d)\sum\limits_{\substack{n\le x\\ (n,R)=d}}1.\\ &= \sum_{d|R} f_r(d) \left[ \frac{x}{R} \phi \left( \frac{R}{d} \right) + \mathcal{O} \left( \tau \left( \frac{R}{d} \right) \right) \right] \\
+&= \frac{x}{R} \sum_{d|R} f_r(d) \phi \left( \frac{R}{d} \right) + \mathcal{O} \left( \sum_{d|R} f_r(d) \tau \left( \frac{R}{d} \right) \right).
+\end{align*}
+    Denote $G(r)=\frac{1}{R}\sum_{d|R}f_r(d)\phi \left(\frac{R}{d}\right)$. So we get,
+    $$\sum_{n\le x}f_r(n)=xG(r)+\mathcal{O}\left(\sum_{d|R}\tau\left(\frac{R}{d}\right)\right)$$
+    By combinatorial arguments one can show that,
+    $$\sum_{d|R}\tau\left(\frac{R}{d}\right)=\sum_{i=0}{s \choose i} 2^{s-i}=3^s$$
+\end{frame}
+\begin{frame}%[shrink=11]
+Thus,
+$$\sum_{n\le x}f_r(n)=xG(r)+\mathcal{O}(3^s)$$
+Observe that $G(r)$ is convolution, since $f_r$ and $\phi$ are multiplicative function we can say that $G(r)$ is also multiplicative. For $r=p^{\alpha}$, $R=p$.
+\begin{align*}
+    G(r)&=\frac{1}{p}\sum_{d|p}f_r(d)\phi\left(\frac{p}{d}\right)\\ 
+    &=\frac{1}{p}\left(f_r(1)\phi(p)+f_r(p)\phi(1)\right)=\frac{1}{p}\left[\left(-\frac{1}{p}\right)^{\alpha}(p-1)+\left(1-\frac{1}{p}\right)^{\alpha}\right]
+\end{align*}
+If $\alpha =1$ for any prime factor of $r$, then $G(r)=0$.
+
+    
+\end{frame}
+\begin{frame}{}
+So,
+\begin{align*}
+    \sum_{n\le x}\left(\sum_{p\le z}f_p(n)\right)^k&=\sum_{p_1,p_2,\cdots, p_k\le z}\sum_{n\le x}f_{p_1.\cdots p_k}(n)\\ &=\sum_{p_1,\cdots,p_k\le z}xG(p_1\cdot p_2\cdots p_k)+\mathcal{O}(3^k) \\&=\sum_{p_1,\cdots,p_k\le z}xG(p_1\cdot p_2\cdots p_k)+\sum_{p_1,\cdots ,p_k\le z}\mathcal{O}(3^k) \\
+    &=\sum_{p_1,\cdots,p_k\le z}xG(p_1\cdot p_2\cdots p_k)+\mathcal{O}(3^k\pi(z)^k) 
+\end{align*}
+Among the $p_i$ primes which are not necessarily unique, say $q_1<q_2<\cdots<q_s$ be the set of distinct primes. Also $s\le \frac{k}{2}$ since $v_{q_i}(r)\ge 2$.
+    
+\end{frame}
+\begin{frame}[shrink=7]
+We can update our result by,
+$$\sum_{p_1.p_2.\cdots p_k\le z}G(p_1.p_2.\cdots p_k)=\sum_{s\le \frac{k}{2}}\sum_{q_1<q_2<\cdots <q_s}\sum\limits_{\substack{\alpha_i\ge 2\\ \sum_{i}\alpha_i=k}}\frac{k!}{\alpha_i!\cdots \alpha_s!}G(q_1^{\alpha_1}\cdots q_s^{\alpha_s})$$
+For $k$ even, $s=\frac{k}{2}$ many distinct prime factors contribute in the above sum. Firstly just focus on the term when $s=\frac{k}{2}$ and $\alpha_i=2$.
+$$\sum_{q_1<q_2<\cdots <q_{\frac{k}{2}}}\frac{k!}{2^{\frac{k}{2}}}G(q_1^2.q_2^2\cdots q_{\frac{k}{2}}^2)=\frac{k!}{2^{\frac{k}{2}}\left(\frac{k}{2}\right)!}\sum_{q_1,q_2,\cdots,q_{\frac{k}{2}}\le z}\prod_{i}^{\frac{k}{2}}\frac{1}{q_i}\left(1-\frac{1}{q_i}\right)$$
+Now lets bound the above sum. 
+\end{frame}
+\begin{frame}[shrink=18]
+\setbeamercolor{block title}{bg=green!30!black, fg=white}
+ \setbeamercolor{block body}{bg=green!20, fg=black}
+\begin{block}{Exercise}
+    Show that 
+    $$\left(\sum_{\pi_{\frac{k}{2}}\le p\le z}\frac{1}{p}\left(1-\frac{1}{p}\right)\right)^{\frac{k}{2}}\le \sum_{q_1,q_2,\cdots,q_{\frac{k}{2}}\le z}\prod_{i}^{\frac{k}{2}}\frac{1}{q_i}\left(1-\frac{1}{q_i}\right)\le \left(\sum_{ p\le z}\frac{1}{p}\left(1-\frac{1}{p}\right)\right)^{\frac{k}{2}} $$
+    Hint: $\frac{1}{p}\left(1-\frac{1}{p}\right)$ decreases as $p$ increases.
+\end{block}
+Using the above result and applying the Mertens Theorem, we get
+\begin{align*}
+C_k\sum_{q_1,q_2,\cdots,q_{\frac{k}{2}}\le z}\prod_{i}^{\frac{k}{2}}\frac{1}{q_i}\left(1-\frac{1}{q_i}\right)&=\left(\sum_{p\le z}\frac{1}{p}-\sum_{p\le z}\frac{1}{p^2}+\mathcal{O}(\log\log k)\right)^{\frac{k}{2}}\\ &=(\log \log z+\mathcal{O}(1+\log\log k))^{\frac{k}{2}}.
+\end{align*}
+
+\end{frame}
+\begin{frame}[shrink=8]
+\begin{align*}
+    (\log \log z+\mathcal{O}(1+\log\log k))^{\frac{k}{2}}&=(\log \log z)^{\frac{k}{2}}\left(1+\mathcal{O}\left(\frac{\log \log k}{\log \log z}\right)\right)^{\frac{k}{2}}\\
+    &=(\log \log z)^{\frac{k}{2}}\left(1+\mathcal{O}\left(\sum_{i=1}{\frac{k}{2} \choose i}\left(\frac{\log \log k}{\log \log z}\right)^i\right)\right)
+\end{align*}
+All the terms of the inside sum is less than the first term $\frac{k}{2}\frac{ \log \log k}{\log \log z}$. 
+\begin{align*}
+    (\log \log z+\mathcal{O}(1+\log\log k))^{\frac{k}{2}}&=(\log \log z)^{\frac{k}{2}}\left(1+\mathcal{O}\left(\frac{k}{2}\frac{k\cdot \log \log k}{\log \log z}\right)\right)\\&= (\log \log z)^{\frac{k}{2}}\left(1+\mathcal{O}\left(\frac{k^3}{\log \log z}\right)\right)
+\end{align*}
+    Note: This is only the term when $s=\frac{k}{2}$. Now we will deal with the terms $s<\frac{k}{2}$.
+\end{frame}
+\begin{frame}[shrink=5]
+We have 
+$$G(q_1^{\alpha_1}\cdot q_2^{\alpha_2}\cdots q_s^{\alpha_s})=\prod_{i}^{s}\left[\left(-\frac{1}{q}\right)^{\alpha_i}\left(1-\frac{1}{q}\right)+\frac{1}{q}\left(1-\frac{1}{q}\right)^{\alpha_i}\right]$$
+As $\alpha$ increases, $$\left(-\frac{1}{q}\right)^{\alpha}\left(1-\frac{1}{q}\right)+\frac{1}{q}\left(1-\frac{1}{q}\right)^{\alpha}$$
+decreases. Thus for $\alpha\ge 2$, it is maximum for $\alpha=2$. Thus,
+$$0\le \left(-\frac{1}{q}\right)^{\alpha}\left(1-\frac{1}{q}\right)+\frac{1}{q}\left(1-\frac{1}{q}\right)^{\alpha}\Big|_{\alpha=2}\le \frac{1}{q}$$
+Hence we can say,
+$$0\le G(r)=G(q_1^{\alpha_1}\cdot q_2^{\alpha_2}\cdots q_s^{\alpha_s})\le \frac{1}{q_1\cdot q_2\cdots q_s}$$
+    Denote,
+    $$A=\sum_{s<\frac{k}{2}}\sum_{q_1<q_2<\cdots <q_s\le z}\sum\limits_{\substack{\alpha_i\ge 2 \\ \sum_{i}\alpha_i=k}}\frac{k!}{\alpha_1!\cdot \alpha_2!\cdots \alpha_s!}G(q_1^{\alpha_1}\cdot q_2^{\alpha_2}\cdots q_s^{\alpha_s})$$
+\end{frame}
+\begin{frame}{}
+    So,
+    $$A\le \sum_{s<\frac{k}{2}}\sum_{q_1<q_2<\cdots <q_s}\frac{k!}{q_1\cdot q_2\cdots q_s}\sum\limits_{\substack{\alpha_i\ge 2 \\ \sum_{i}\alpha_i=k}}\frac{1}{\alpha_1!\cdot \alpha_2!\cdots \alpha_s!}$$
+    Alike the bound used in the last exercise and since $\alpha_i\ge 2$ we can show that,
+    \begin{align*}
+        A&\le \sum_{s<\frac{k}{2}}\frac{k!}{s!}\left(\sum_{q\le z}\frac{1}{q}\right)^s\sum\limits_{\substack{\alpha_i\ge 2 \\ \sum_{i}\alpha_i=k}}\frac{1}{\alpha_1!\cdot \alpha_2!\cdots \alpha_s!}\\ 
+        &\le \sum_{s<\frac{k}{2}}\frac{k!}{s!\cdot 2^s}\left(\sum_{q\le z}\frac{1}{q}\right)^s \mathcal{H}_k(s)
+    \end{align*}
+\end{frame}
+\begin{frame}{}
+    where $\mathcal{H}_k(s)$ denotes the number of $s$ tuples $(\alpha_1,\alpha_2,\cdots,\alpha_s)$ such that $\alpha_i\ge 2$ and $\sum_{i}\alpha_i=k$.
+    \begin{align*}
+        &\sum_{i}^s\alpha_i=k\\
+        &\sum_{i}^s(\alpha_i-2)=k-2s
+    \end{align*} Thus,
+    $$\mathcal{H}_k(s)={k-s-1 \choose s-1}$$
+    Hence by using the Merten's Theorem we get,
+    $$A\le \sum_{s<\frac{k}{2}}\frac{k!}{2^s\cdot s!}{k-s-1 \choose s-1}(\log \log z+\mathcal{O}(1))^s$$
+\end{frame}
+\begin{frame}{}
+    \textbf{Case 1:} $k$ is even.\\
+    Using the fact $k^3\le \log \log z$ and the definition of $A$, $C_k$ we get,
+    \begin{align*}
+        A&\le \sum_{s\le \frac{k}{2}-1}\frac{k!}{2^ss!}{k-s-1 \choose s-1}(\log \log z +\mathcal{O}(1))^s\\ &\ll C_k(\log \log z)^{(\frac{k}{2}-1)}\sum_{s\le \frac{k}{2}-1}\frac{k!}{2^ss!C_k}{k-s \choose s}\left(\frac{1}{\log\log z}\right)^{\frac{k}{2}-1-s}\\ &\ll C_k\frac{(\log\log z)^{\frac{k}{2}}}{\log\log z}\sum_{s\le \frac{k}{2}-1}\frac{k!}{2^ss!C_k}{k-s \choose s}\left(\frac{1}{k^3}\right)^{\frac{k}{2}-1-s}\\ &\ll C_k(\log\log z)^{\frac{k}{2}}\left(\frac{k^3}{\log\log z}\right)\left(\sum_{s\le \frac{k}{2}-1}\frac{k!}{2^ss!C_k}{k-s \choose s}\left(\frac{1}{k^3}\right)^{\frac{k}{2}-s}\right)
+    \end{align*}
+    
+\end{frame}
+\begin{frame}[shrink=20]
+\setbeamercolor{block title}{bg=green!30!black, fg=white}
+ \setbeamercolor{block body}{bg=green!20, fg=black}
+    \begin{block}{Exercise}
+        Show that :
+        $$\sum_{s\le \frac{k}{2}-1}\frac{k!}{2^ss!C_k}{k-s \choose s}\left(\frac{1}{k^3}\right)^{\frac{k}{2}-s}\ll1$$
+    \end{block}
+    From the above exercise we can conclude  that 
+    $$A=C_k(\log\log z)^{\frac{k}{2}}\mathcal{O}\left(\frac{k^3}{\log\log z}\right)$$
+    So we are on the final part of the proof.
+    \begin{align*}
+        \sum_{n\le x}\left(\sum_{p\le z}f_p(n)\right)^k&=x\left(\sum_{p_1,p_2,\cdots,p_k\le z}G(p_1\cdot p_2\cdots p_k)\right)+\mathcal{O}(3^k\pi(z)^k)\\ &=x\left(\sum_{s\le\frac{k}{2}}\sum_{q_1<q_2<\cdots <q_s\le z}\sum\limits_{\substack{\alpha_i\ge 2 \\ \sum_{i}\alpha_i=k}}\frac{k!}{\alpha_1!\cdot \alpha_2!\cdots \alpha_s!}G(q_1^{\alpha_1}\cdot q_2^{\alpha_2}\cdots q_s^{\alpha_s})\right)\\&+\mathcal{O}(3^k\pi(z)^k)
+        \end{align*}
+\end{frame}
+\begin{frame}[shrink=10]
+\begin{align*}
+    \sum_{n\le x}\left(\sum_{p\le z}f_p(n)\right)^k&=x\left(C_k\cdot (\log\log z)^{\frac{k}{2}}\left(1+\mathcal{O}\left(\frac{k^3}{\log\log z}\right)\right)+A\right)+\mathcal{O}(3^k\pi(z)^k)\\&=xC_k (\log\log z)^{\frac{k}{2}}\left(1+\mathcal{O}\left(\frac{k^3}{\log\log z}\right)\right)+\mathcal{O}(3^k\pi(z)^k)
+\end{align*}
+    This completes the proof of the first proposition which is for $k$ even.
+    \textbf{The other case for odd $k$ is left as an exercise for the readers.}
+\end{frame}
+\subsection{Part II}
+\begin{frame}{PART II}
+This is the proof of moments given by Granville and Soundarajan.
+For $N\ge 1$ consider the sequence of random variables,
+$$X_N=\frac{w(n)-\log\log N}{\sqrt{\log\log N}}$$
+    for all $n\le N$. If we can show that $\lim_{N\rightarrow\infty}E(X_N^k)=E(Y^k)$ where $Y\sim N(0,1)$ for all $k\ge 1$, then from (corollary 1.1) we can conclude that 
+    $$\lim_{N\rightarrow\infty}X_N\sim N(0,1)$$ which completes the proof.
+    For any $k\ge 1$,
+    $$E(X_N^k)=\frac{1}{N}\sum_{n\le N}\left(\frac{w(n)-\log\log N}{\sqrt{\log\log N}}\right)^k$$
+\end{frame}
+\begin{frame}{}
+\setbeamercolor{block title}{bg=red!30!black, fg=white}
+ \setbeamercolor{block body}{bg=red!20, fg=black}
+    \begin{block}{Claim}
+        For even $k\in \mathbb{N}$ and $k\le (\log\log N)^{\frac{1}{3}}$,
+        \setbeamercolor{block title}{bg=green!30!black, fg=white}
+ \setbeamercolor{block body}{bg=green!20, fg=black}
+        $$\sum_{n\le N}(w(n)-\log \log N)^k=NC_k(\log\log N)^{\frac{k}{2}}\left(1+\mathcal{O}\left(\frac{k^3}{\log\log N}\right)\right)$$
+        and for odd $k\in \mathbb{N}$ we have,
+        $$\sum_{n\le N}(w(n)-\log \log N)^k \ll NC_k(\log\log N)^{\frac{k}{2}}\frac{k^{\frac{3}{2}}}{\sqrt{\log\log N}}$$
+    \end{block}
+    Proving this claim finishes our proof as by taking $N\rightarrow\infty$ we will obtain our required target. One can find similarities with the previous proposition. The proof of this claim is followed in the next part.
+\end{frame}
+\subsection{PART III}
+\begin{frame}[shrink=4]{Final Part}
+    Set $z=N^{\frac{1}{k}}$ and by the definition of $f_p(n)$ in the previous parts we get,\\
+    $\left(f_p(n)+\frac{1}{p}\right)$=\begin{cases}
+    1& \text{if } p \mid n \\ 
+    0 & \text{if } p \nmid n.
+\end{cases}
+\begin{align*}
+    w(n)=\sum_{p\le z}\left(f_p(n)+\frac{1}{p}\right)+ \sum\limits_{\substack{p>z\\ p|n}}1.
+\end{align*}
+There are atmost $k$ many prime factors $p$ of $n$ such that $p>z>n^\frac{1}{k}$. Thus,
+\begin{align*}
+    w(n)-\log\log N&=\sum_{p\le z}f_p(n) + \mathcal{O}(k)+\log\log z-\log\log N+\mathcal{O}(1).\\ &=\left(\sum_{p\le z}f_p(n)\right)+\mathcal{O}(k)-\log k=\left(\sum_{p\le z}f_p(n)\right)+\mathcal{O}(k).
+\end{align*}
+\end{frame}
+\begin{frame}{}
+\begin{align*}
+    (w(n)-\log\log N)^k&=\left(\sum_{p\le z}f_p(n)+\mathcal{O}(k)\right)^k\\&=\left(\sum_{p\le z}f_p(n)\right)^k+\sum_{i=0}^{k-1}{k \choose i}\left(\sum_{p\le z}f_p(n)\right)^i\mathcal{O}(k)^{k-i}\\&=\left(\sum_{p\le z}f_p(n)\right)^k+\mathcal{O}\left((ck)^{k-l}{k \choose l}\left|\sum_{p\le z}f_p(n)\right|^l\right)
+\end{align*}
+where $l$ is the number for which the term ${k \choose l}\left(\sum_{p\le z}f_p(n)\right)^l\mathcal{O}(k)^{k-l}$ is maximum.
+\end{frame}
+
+\begin{frame}[shrink=15]
+Summing over $n\le N$ we get,
+\begin{align*}
+    \sum_{n\le N}(w(n)+\log\log N)^{k}=\sum_{n\le N}\left(\sum_{p\le z}f_p(n)\right)^k+\mathcal{O}\left(\sum_{n\le N}(ck)^{k-l}{k \choose l}\left|\sum_{p\le z}f_p(n)\right|^l\right)
+\end{align*}
+    For different $n$ we will get different value of $l$ in the above equation, thus $l=f(n)$. Consider the sets $A_l=\{n: f(n)=l \text{ and } n\le N\}.$
+    Here $l\le k-1$. If $l$ is even then it can be directly handled by the proposition. If $l$ is odd,
+    \begin{align*}
+        \sum_{n\in A_l}\left(\sum_{p\le z}f_p(n)\right)^l\le \sum_{n\le N}\left(\sum_{p\le z}f_p(n)\right)^l
+    \end{align*}
+    By using Cauchy Swartz Inequality we get,
+    \begin{align*}
+        \sum_{n\le N}\left(\sum_{p\le z}f_p(n)\right)^l \le \left(\sqrt{\sum_{n\le N}\left(\sum_{p\le z}f_p(n)\right)^{l+1}}\right) \left(\sqrt{\sum_{n\le N}\left(\sum_{p\le z}f_p(n)\right)^{l-1}}\right)
+    \end{align*}
+\end{frame}
+\begin{frame}[shrink=20]
+Now, applying the proposition on the above terms for even $l-1$ and $l+1$ we get,
+\begin{align*}
+    \sum_{n\le N}\left(\sum_{p\le z}f_p(n)\right)^l &\le \left(NC_{l+1}(\log\log z)^{\frac{l+1}{2}}\left(1+\mathcal{O}\left(\frac{(l+1)^3}{\log\log z}\right)\right)+\mathcal{O}(3^{l+1}\pi(z)^{l+1})\right)^{\frac{1}{2}}\cdot\\
+    & \left(NC_{l-1}(\log\log z)^{\frac{l-1}{2}}\left(1+\mathcal{O}\left(\frac{(l-1)^3}{\log\log z}\right)\right)+\mathcal{O}(3^{l-1}\pi(z)^{l-1})\right)^{\frac{1}{2}}\cdots(*)
+\end{align*}
+    Using the fact that $z=N^{\frac{1}{k}}$, notice
+    \begin{align*}
+        3^{l+1}\pi(z)^{l+1}\le 3^k\pi(z)^k&\le 3^k\left(\frac{z}{\log z}\right)^k\\&\le 3^k\left(\frac{Nk^k}{(\log N)^k}\right)<<N
+    \end{align*}
+    Thus, 
+    $$\mathcal{O}(3^{l+1}\pi(z)^{l+1})<<N$$
+    which is very negligible in comparison to the other terms.
+\end{frame}
+\begin{frame}[shrink=15]
+The main dominating terms in $(*)$ are the $NC_{l+1}(\log\log z)^{\frac{l+1}{2}}$ and $NC_{l-1}(\log\log z)^{\frac{l-1}{2}}$. Thus,
+\begin{align*}
+    \sum_{n\le N}\left(\sum_{p\le z}f_p(n)\right)^l &\ll \left(NC_{l+1}(\log\log z)^{\frac{l+1}{2}}\right)^{\frac{1}{2}}\left(NC_{l-1}(\log\log z)^{\frac{l-1}{2}}\right)^{\frac{1}{2}}\\ &\ll N\sqrt{C_{l-1}C_{l+1}}(\log\log z)^{\frac{l}{2}}
+\end{align*}
+    So,
+    \begin{align*}
+        \sum_{n\le N}(w(n)-\log\log N)^k-\sum_{n\le N}\left(\sum_{p\le z}f_p(n)\right)^k &=\mathcal{O}\left(\sum\limits_{\substack{l=0\\2|l}}^{k-1}(ck)^{k-l}{k \choose l}\sum_{n\in A_l}\left|\sum_{p\le z}f_p(n)\right|^l\right)\\
+        &+\mathcal{O}\left(\sum\limits_{\substack{l=0 \\2\nmid  l}}^{k-1}(ck)^{k-l}{k \choose l}\sum_{n\in A_l}\left|\sum_{p\le z}f_p(n)\right|^l\right)\\
+    \end{align*}
+\end{frame}
+    \begin{frame}[shrink=35]
+    Lets focus on the right hand side of the inequality.Using the above bounds we get,
+    \begin{align*}
+        \sum_{n\le N}(w(n)-\log\log N)^k-\sum_{n\le N}\left(\sum_{p\le z}f_p(n)\right)^k &=\mathcal{O}\left(\sum\limits_{\substack{l=0\\2|l}}^{k-1}(ck)^{k-l}{k \choose l}\left[C_lN(\log\log z)^{\frac{l}{2}}\left(1+\mathcal{O}\left(\frac{l^3}{\log\log z}\right)\right)\right]\right)\\
+        &+\mathcal{O}\left(\sum\limits_{\substack{l=0 \\2\nmid  l}}^{k-1}(ck)^{k-l}{k \choose l}N\sqrt{C_{l-1}C_{l+1}}(\log\log z)^{\frac{l}{2}}\right)
+        \end{align*}
+        Since, 
+        $$\frac{l^3}{\log\log z}\le \frac{k^3}{\log\log z}$$
+        The third term is very negligible in comparison to the others.
+        \begin{align*}
+         \sum_{n\le N}(w(n)-\log\log N)^k-\sum_{n\le N}\left(\sum_{p\le z}f_p(n)\right)^k & =\mathcal{O}\left(\sum\limits_{\substack{l=0\\2|l}}^{k-1}(ck)^{k-l}{k \choose l}C_lN(\log\log z)^{\frac{l}{2}}\right)\\&
+        +\mathcal{O}\left(\sum\limits_{\substack{l=0 \\2\nmid  l}}^{k-1}(ck)^{k-l}{k \choose l}N\sqrt{C_{l-1}C_{l+1}}(\log\log z)^{\frac{l}{2}}\right)
+        \end{align*}
+        
+    \end{frame}
+    \begin{frame}[shrink=38]
+    So by adjusting we get,
+    \begin{align*}
+        \sum_{n\le N}(w(n)-\log\log N)^k-\sum_{n\le N}\left(\sum_{p\le z}f_p(n)\right)^k &=\mathcal{O}\left(N\cdot C_k\sum_{l=0}^{k-1}(ck)^{k-l}{k \choose l}\frac{\max\{C_l,\sqrt{C_{l-1}\cdot C_{l+1}}\}}{C_k}(\log\log z)^{\frac{l}{2}}\right)\\ &=\mathcal{O}\left(NC_k(\log\log z)^{\frac{k}{2}}\sum_{l=0}^{k-1}{k \choose l}\frac{\max\{C_l,\sqrt{C_{l-1}\cdot C_{l+1}}\}}{C_k}\left(\frac{ck}{\sqrt{\log\log z}}\right)^{k-l}\right)
+    \end{align*}
+    The terms in the sum is maximum when $l=k-1$. And using the fact $k\le (\log\log z)^{\frac{1}{3}}$ we get,
+    $$\frac{ck}{\sqrt{\log\log z}}=\mathcal{O}\left(\frac{(\log\log z)^{\frac{1}{3}}}{\sqrt{\log\log z}}\right)=\mathcal{O}\left((\log\log z)^{-\frac{1}{6}}\right)$$
+    \begin{align*}
+         \sum_{n\le N}(w(n)-\log\log N)^k-\sum_{n\le N}\left(\sum_{p\le z}f_p(n)\right)^k =\mathcal{O}\left(N\cdot C_k (\log\log z)^{\frac{k}{2}-\frac{1}{6}}\right)
+    \end{align*}
+    We need to now replace $\log\log z$ by $\log\log N$ to complete the claim.
+    Using the fact $z=N^{\frac{1}{k}}$ we get,
+    $$\log\log z=\log\log N-\log k$$
+    Thus we can say that 
+    $\log\log z=\mathcal{O}(\log\log N)$
+    Hence by replacing we get,
+    $$\sum_{n\le N}(w(n)-\log\log N)^k=\sum_{n\le N}\left(\sum_{p\le z}f_p(n)\right)^k +\mathcal{O}\left(N\cdot C_k (\log\log N)^{\frac{k}{2}-\frac{1}{6}}\right)$$
+        
+    \end{frame}
+    \begin{frame}%[shrink=8]
+        So by using the proposition of the first part and the last equation we can say that for $k$ even,
+        \begin{align*}
+            \sum_{n\le N}(w(n)-\log\log N)^k&=NC_k(\log\log N)^{\frac{k}{2}}\left(1+\mathcal{O}\left(\frac{k^3}{\log\log N}\right)\right)\\
+            &+\mathcal{O}(NC_k(\log\log N)^{{\frac{k}{2}-\frac{1}{6}}})\\&=NC_k(\log\log N)^{\frac{k}{2}}\left(1+\mathcal{O}\left(\frac{k^3}{\log\log N}\right)\right)
+        \end{align*}
+        $$\implies \frac{1}{N}\sum_{n\le N}\left(\frac{w(n)-\log\log N}{\sqrt{\log\log N} }\right)^k=C_k\left(1+\mathcal{O}\left(\frac{k^3}{\log\log N}\right)\right)$$
+    \end{frame}
+    \begin{frame}[shrink=5]
+    Thus we get,
+    %\setbeamercolor{block title}{bg=red!30!black, fg=white}
+ \setbeamercolor{block body}{bg=green!20, fg=black}
+    \begin{block}{}
+        $$\lim_{N\rightarrow \infty}E(X_N^k)=\lim_{N\rightarrow \infty}\frac{1}{N}\sum_{n\le N}\left(\frac{w(n)-\log\log N}{\sqrt{\log\log N} }\right)^k=C_k$$
+        \end{block}
+        And for odd $k$ similarly we have,
+        \begin{align*}
+            E(X_N^k)=\frac{1}{N}\sum_{n\le N}\left(\frac{w(n)-\log\log N}{\sqrt{\log\log N}}\right)^k<<C_k\frac{k^{\frac{3}{2}}}{\sqrt{\log\log N}}+\mathcal{O}(\log\log N)^{-\frac{1}{6}}
+        \end{align*}
+        Thus,
+         \setbeamercolor{block body}{bg=green!20, fg=black}
+         \begin{block}{}
+        $$\lim_{N\rightarrow\infty}E(X_N^k)=\lim_{N\rightarrow\infty}\frac{1}{N}\sum_{n\le N}\left(\frac{w(n)-\log\log N}{\sqrt{\log\log N}}\right)^k= 0$$
+        \end{block}
+       
+        
+    \end{frame}
+    \begin{frame}{}
+         Hence from the (corollary 1.1) we can conclude that 
+         $$\lim_{N\rightarrow\infty}X_N\sim N(0,1)$$
+         Thus for any real $a\le b$ we can say,
+         $$\lim_{N\rightarrow\infty}\mathbb{P}(a\le X_N\le b)=\frac{1}{\sqrt{2\pi}}\int_{a}^{b}e^{-\frac{x^2}{2}}dx.$$
+    \end{frame}
+
+\end{document}
