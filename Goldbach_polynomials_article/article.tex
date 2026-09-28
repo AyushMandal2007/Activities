@@ -1,0 +1,155 @@
+\documentclass[11pt]{article} 
+
+% Core math and formatting packages to replace evan.sty
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{geometry}
+\geometry{margin=1in} % Standard readable margins
+\usepackage{fancyhdr} % For custom headers
+
+\usepackage{dsfont}  
+\usepackage[most]{tcolorbox}
+\usepackage{multicol}
+\usepackage{comment}
+
+% Define custom environments that were previously handled by evan.sty
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{exercise}{Exercise}[section]
+
+\theoremstyle{definition} % Makes the text Roman instead of italics for examples
+\newtheorem{example}{Example}[section]
+
+\definecolor{midnightblue}{RGB}{25, 25, 112}
+% Define a custom box for your problems
+\newtcolorbox{probbox}[1][]{
+    enhanced,
+    breakable,
+    colback=blue!5!white,
+    colframe=midnightblue, 
+    fonttitle=\bfseries,
+    arc=2mm,
+    title=Problem Statement
+    #1
+}
+
+\title{A Perron-Theoretic Proof of the Polynomial Goldbach Theorem}
+\author{Ayush Mandal (B.Math 2nd Year) \\ \normalsize Indian Statistical Institute, Bangalore}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+% Header setup using fancyhdr instead of KOMA-script
+\pagestyle{fancy}
+\fancyhf{} % Clears all default headers and footers
+\lhead{\small \textbf{Ayush Mandal(B.Math 2nd Year)}} % Left header
+\cfoot{\thepage} % Page number at the bottom center
+\renewcommand{\headrulewidth}{0.4pt} % Adds a subtle line under the header
+
+\begin{abstract}
+    In 1965, David Hayes showed that any polynomial $f\in \mathbb{Z}[X]$ of degree $n$ can be expressed as 
+    the sum of two irreducible integer polynomials of degree $n$. In general it is true for any Noetherian ring $R$
+    with infinitely many maximal R-ideals which was proved in the $21st$ century. Here I have used Perron's criterion
+    of irreducibility to show the result for $R=\mathbb{Z}$.
+\end{abstract}
+
+\section{Introduction}
+We all have definitely heard of the famous \textit{Goldbach Conjecture}.
+It states that any even positive integer greater than $2$ can be expressed as sum of two prime numbers. 
+ We say an element $a$ in a ring $R$ irreducible, if 
+$a=bc$ implies either $b$ or $c$ is a unit (which has multiplicative inverse). In a Principal Ideal Domain (PID), every irreducible element is prime 
+whose proof one can find in any algebra book. Since $\mathbb{Z}$ is a PID, every irreducible element is prime. Thus we can refine our statement of Goldbach 
+conjecture by replacing prime with irreducible elements of $\mathbb{Z}$. Getting motivated from this problem, we ask the same question in polynomial ring.
+Can every polynomial over any arbitrary ring of degree $n$ be expressed as the sum of irreducible polynomials of the same ring having degree $n$? The answer is not 
+always. But for Noetherian rings having infinitely many maximal ideals we can. Since $\mathbb{Z}$ is such a ring, for any $f\in \mathbb{Z}[X]$ there exists 
+irreducible polynomials $g,h\in \mathbb{Z}[X]$ such that $f=g+h$ with $\deg(f)=\deg(g)=\deg(h)$. David Hayes proved it using Eisenstein's criterion of 
+irreducibility. Here I will be proving this theorem using a very strong criterion for irreducibility called Perron's criterion which I will be proving.
+
+\section{Preliminaries}
+For this paper, one need to know some Complex analysis as the well known \textit{Rouché's theorem} will be used in the proof of the Perron's criterion. I will not be proving this theorem
+as one can easily find it in any standard complex analysis book.
+\newpage
+
+\begin{theorem}[\textit{Rouché's theorem}]
+    Let f and g be analytic functions on and inside a simple closed curve C. Suppose
+that $|f(z)| > |g(z)|$ for all points $z$ on $\mathcal{C}$. Then $f$ and $f + g$ have the same number of zeros (counting
+multiplicities) interior to $\mathcal{C}$.
+\end{theorem}
+
+\section{Perron's Irreducibility Criterion}
+\begin{theorem}[Perron]
+    Let $P(x) = x^n + a_{n-1} x^{n-1} +\cdots+ a_1 x + a_0$ be an integer polynomial with $a_0\neq 0$ and
+    $$|a_{n-1}|>1+|a_{n-2}|+\cdots+|a_1|+|a_0|$$
+Then $P(x)$ is irreducible.
+\end{theorem}
+\begin{proof}
+    Let $\alpha\in \mathbb{C}$ be a root of $P(x)$ with $|\alpha|=1$. Then
+    $$-a_{n-1}\alpha^{n-1}=1+\alpha^n+a_{n-2}\alpha^{n-2}+\cdots+a_0$$
+    $$|a_{n-1}|\le 1+ |a_{n-2}|+\cdots +|a_1|+|a_0|$$ which contradicts the condition. Thus, 
+    $|\alpha|\neq 1$ or no roots lie on the unit circle. Now consider polynomials $f(x)=a_{n-1}x^{n-1}$ and $g(x)=P(x)-a_{n-1}x^{n-1}$ and the simple closed curve 
+    $\mathcal{C}=\{z\in \mathbb{C}: |z|=1\}$. By the given condition we can easily say that 
+    $$|f(z)|=|a_{n-1}z^{n-1}|>|P(z)-a_{n-1}z^{n-1}|=|g(z)|$$ for all $z\in \mathcal{C}$. Thus by  Rouché's theorem, we can say that $a_{n-1}z^{n-1}$ and $P(z)$ has same number of zeroes inside $\mathcal{C}$. 
+    Since $f$ has exactly $n-1$ zeroes inside, $P(z)$ also has exactly $n-1$ zeroes strictly inside $\mathcal{C}$ (as no roots can lie on $\mathcal{C}$) and another say $\alpha $ with $|\alpha|>1$. 
+    Now suppose $P$ is reducible, then there exists $f,g\in \mathbb{Z}[X]$ with $\deg(f),\deg(g)\ge 1$ such that $$P(x)=f(x)g(x)$$ Since $P(0)=a_0\neq 0$, $|f(0)|,|g(0)|\ge 1$.
+    WLOG, let $\alpha$ be a root of $g(x)$. Let $\deg(f)=k<n$ and $\alpha_1,\alpha_2,\cdots, \alpha_k$ be the roots of $f(x)$. Then $|\alpha_i|<1$ for all $1\le i\le k$. Also since $P(x)$ is a monic polynomial, $f,g$ also has to be
+    monic. Using Vieta's theorem we can say that  $$1\le |f(0)|=\left|\prod_{i=1}^k\alpha_i\right|<1$$ which is a contradiction. Thus, $P$ is irreducible.
+\end{proof}
+\newpage
+
+This criterion makes our life very easy while solving irreducibility problems. One can solve the following example problem directly by invoking the theorem.
+\begin{example}[IMO 1993]
+     Let $f(x) = x^n + 5x^{n-1} + 3$, where $n > 1$ is an integer. Prove that $f(x)$ cannot be expressed
+    as the product of two nonconstant polynomials with integer coefficients.
+\end{example}
+The following are some direct exercises to enjoy!
+\begin{exercise}
+Let $P(z)=a_nz^n+a_{n-1}z^{n-1}+\cdots+a_0$ be a polynomial with $a_i\in \mathbb{C}$ such that 
+$$2|a_k|>\sum_{i=0}^n|a_i|$$ for some $0\le k\le n$. Then show that exactly $k$ many roots of $P$ are strictly inside the unit circle and the 
+other $n-k$ outside the circle.
+\end{exercise}
+
+\begin{exercise}
+    Let $P(z)=a_nz^n+a_{n-1}z^{n-1}+\cdots+a_0$ be a polynomial with $a_i\in \mathbb{Z}$ and $|a_0|$ is prime such that 
+    $$2|a_0|>\sum_{i=0}^n|a_i|$$ Show that $P$ is irreducible in $\mathbb{Z}[X]$.
+\end{exercise}
+
+\begin{exercise}[Iran 2003]
+     Let $f_1,f_2,\cdots,f_n$ be polynomials with integer coefficients. Show that there exists a reducible
+     polynomial $g(x)\in \mathbb{Z}[x]$ such that $f_i(x)+g(x)$ is irreducible for $i=1,2,\cdots,n$.
+\end{exercise}
+
+\section{The Main Theorem}
+\begin{theorem*}
+    For any polynomial $P\in \mathbb{Z}[X]$ of $\deg(P)\ge 1$, there exists $f,g\in \mathbb{Z}[X]$ irreducible polynomials with $\deg(P)=\deg(f)=\deg(g)$ such that 
+    $$P(x)=f(x)+g(x)$$
+\end{theorem*}
+\begin{proof}
+    In my proof I will be explicitly constructing polynomials $f,g$ to get the theorem. Suppose 
+    $P(x)=a_nx^n+a_{n-1}x^{n-1}+\cdots+a_0$ with $a_i\in \mathbb{Z}[X]$. Define $$f(x)=b_nx^n+(a_{n-1}-pM) x^{n-1}+a_{n-2}x^{n-2}+\cdots+a_1x+(a_0-p)$$ $$g(x)=c_nx^n+pMx^{n-1}+p$$ where 
+    $p$ is some prime such that $p\nmid c_n$ and $a_0-p\neq 0$.\newpage If $a_n=1$, $b_n=-1$ and $c_n=2$ else $b_n=1$ and $c_n=a_n-1$. Now choose $M$ such that $p\nmid M$ and 
+    $$|a_{n-1}-pM|>1+|a_{n-2}|+\cdots+|a_1|+|a_0-p|$$ Thus one can easily check that $P(x)=f(x)+g(x)$. Observe that $g$ is an Eisenstein polynomial and $f$ satisfies the Perron's criterion as per the construction, thus both $f,g$ are irreducible.
+    This completes the proof!
+\end{proof}
+
+\begin{example}
+    Consider a polynomial $p(x)=x^5+4x^4-2x^2+7$. Using the above construction, we take the polynomials $g(x)=2x^5+3\cdot 8x^4+3$ and $f(x)=-x^5-20x^4-2x^2+4$ where both $f,g$ are
+    irreducible and $p=f+g$.
+\end{example}
+
+The one who are interested to explore more on this, can use the following references to get the proof of the general theorem.
+
+\begin{thebibliography}{9} % '9' means you have fewer than 10 references. Use '99' for up to 99.
+
+\bibitem{hayes1965}
+D. R. Hayes, \textit{A Goldbach Theorem for Polynomials with Integral Coefficients}, 
+The American Mathematical Monthly, vol. 72, no. 1, 1965, pp. 45--46.
+
+\bibitem{pollack2011}
+P. Pollack, \textit{On Polynomial Rings with a Goldbach Property}, 
+The American Mathematical Monthly, vol. 118, no. 1, 2011, pp. 71--77.
+
+\end{thebibliography}
+\end{document}
